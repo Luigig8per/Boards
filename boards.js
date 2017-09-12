@@ -1,31 +1,63 @@
-
 var http = require('http');
-var data = JSON.stringify({
-  'id': '2'
-});
-
+var schedule = require('node-schedule');
+//The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
 var options = {
-  host: 'http://pinn.g8.webconsultingcr.com',
-  port: '80',
-  path: '/get.php?action=getGames&sid=29&r=1',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Content-Length': data.length
-  }
+  host: 'pinn.g8.webconsultingcr.com',
+  path: '/get.php?action=getGames&sid=3&r=1'
 };
 
-var req = http.request(options, function(res) {
-  var msg = '';
+var options2 = {
+  host: 'pinn.g8.webconsultingcr.com',
+  path: '/get.php?action=getGames&sid=29&r=1'
+};
 
-  res.setEncoding('utf8');
-  res.on('data', function(chunk) {
-    msg += chunk;
+var options3 = {
+  host: 'pinn.g8.webconsultingcr.com',
+  path: '/get.php?action=getGames&sid=4&r=1'
+};
+
+
+var options4 = {
+  host: 'pinn.g8.webconsultingcr.com',
+  path: '/get.php?action=getGames&sid=15&r=1'
+};
+
+var options5 = {
+  host: 'pinn.g8.webconsultingcr.com',
+  path: '/getGames.php'
+};
+
+callback = function(response) {
+  var str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (chunk) {
+    str += chunk;
   });
-  res.on('end', function() {
-    console.log(JSON.parse(msg));
+
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+    console.log(str);
   });
+}
+
+
+
+
+var j = schedule.scheduleJob('00 * * * *', function(){
+
+  http.request(options, callback).end();
+  
+  http.request(options2, callback).end();
+  
+  http.request(options3, callback).end();
+  
+  http.request(options5, callback).end();
+
+  http.request(options4, callback).end();
+
+  console.log('Boards updated succesfuly')
+
+ 
 });
 
-req.write(data);
-req.end();
