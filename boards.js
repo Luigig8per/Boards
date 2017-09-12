@@ -44,9 +44,9 @@ callback = function(response) {
 
 
 
-var j = schedule.scheduleJob('18 * * * *', function(){
+var j = schedule.scheduleJob('33 * * * *', function(){
 
-  console.log('This job will run each hour at :18 minutes...')
+  console.log('This job will run each hour at :30 minutes...')
 
   http.request(options, callback).end();
   
@@ -62,4 +62,23 @@ var j = schedule.scheduleJob('18 * * * *', function(){
 
  
 });
+
+var k = schedule.scheduleJob('03 * * * *', function(){
+  
+    console.log('This job will run each hour at :00 minutes...')
+  
+    http.request(options, callback).end();
+    
+    http.request(options2, callback).end();
+    
+    http.request(options3, callback).end();
+    
+    http.request(options5, callback).end();
+  
+    http.request(options4, callback).end();
+  
+    
+  
+   
+  });
 
