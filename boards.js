@@ -37,14 +37,16 @@ callback = function(response) {
 
   //the whole response has been recieved, so we just print it out here
   response.on('end', function () {
-    console.log(str);
+    console.log(str + 'web request made succesfuly');
   });
 }
 
 
 
 
-var j = schedule.scheduleJob('00 * * * *', function(){
+var j = schedule.scheduleJob('18 * * * *', function(){
+
+  console.log('This job will run each hour at :18 minutes...')
 
   http.request(options, callback).end();
   
@@ -56,7 +58,7 @@ var j = schedule.scheduleJob('00 * * * *', function(){
 
   http.request(options4, callback).end();
 
-  console.log('Boards updated succesfuly')
+  
 
  
 });
